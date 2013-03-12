@@ -1,11 +1,14 @@
 {
-	"name": "pout",
-	"version": "0.1.0",
-	"description": "Path routing, simple.",
-	"author": "Sam Holmes",
-	"repository": "https://github.com/samholmes/pout",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	}
+  "name": "pout",
+  "version": "0.1.0",
+  "description": "Path routing, simple.",
+  "author": "Sam Holmes",
+  "repository": "https://github.com/samholmes/pout",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "underscore": "~1.4.4"
+  }
 }

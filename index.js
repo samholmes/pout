@@ -1,5 +1,6 @@
 (function(){
-
+	var _ = require('underscore');
+	
 	/**
 	 * Base path.
 	 */
@@ -219,7 +220,8 @@
 		if (path instanceof RegExp) return path;
 		
 		var pieces = arrayifyPath(path);
-		pieces = pieces.map(function(piece, index){
+		
+		pieces = _.map(pieces, function(piece, index){
 			if (~piece.search(/^\(.*\)$/)) // It is an inline regex
 				return "(?:" + piece.substring(1, piece.length);
 			else
@@ -257,10 +259,7 @@
 		var arr = path.split(/(?=\()/g);
 		var rtrn = [];
 		
-		for (var index=0; index < arr.length; ++index)
-		{
-			var element = arr[index];
-			
+		_.each(arr, function(element, index){
 			if (element[0] === "(")
 			{
 				if (balance === 0)
