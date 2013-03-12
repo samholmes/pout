@@ -257,7 +257,10 @@
 		var arr = path.split(/(?=\()/g);
 		var rtrn = [];
 		
-		arr.forEach(function(element, index){
+		for (var index=0; index < arr.length; ++i)
+		{
+			var element = arr[index];
+			
 			if (element[0] === "(")
 			{
 				if (balance === 0)
