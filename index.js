@@ -257,7 +257,7 @@
 		var arr = path.split(/(?=\()/g);
 		var rtrn = [];
 		
-		for (var index=0; index < arr.length; ++i)
+		for (var index=0; index < arr.length; ++index)
 		{
 			var element = arr[index];
 			
