@@ -37,7 +37,7 @@
 		else if (typeof path === 'string')
 			pout.start(path);
 		else
-			pout(location.pathname + location.search)
+			pout.start(location.pathname + location.search)
 	}
 	
 	/**
@@ -88,6 +88,9 @@
 		}
 
 		next();
+		
+		// Empty callbacks to allow multiple invocations of pout()
+		pout.callbacks = [];
 	};
 
 	/**
@@ -219,7 +222,7 @@
 	function pathToRegex(path, keys, sensitive, strict){
 		if (path instanceof RegExp) return path;
 		
-		var pieces = arrayifyPath(path);
+		var pieces = handleInlineRegex(path, keys);
 		
 		pieces = _.map(pieces, function(piece, index){
 			if (~piece.search(/^\(.*\)$/)) // It is an inline regex
@@ -227,8 +230,9 @@
 			else
 			{
 				return piece
-					.replace(/\+/g, '(.+)')
-					.replace(/\*/g, '(.*)')
+					.replace(/([\/.])/g, '\\$1')
+					.replace(/\+/g, '(?:.+)')
+					.replace(/\*/g, '(?:.*)')
 					.replace(/(\/)?(\.)?:(\w+)(\?)?(\*)?/g, function(_, slash, format, key, optional, star){
 							keys.push({ name: key, optional: !! optional });
 							slash = slash || '';
@@ -239,8 +243,7 @@
 								+ (format || '') + (format && '([^/.]+?)' || '([^/]+?)') + ')'
 								+ (optional || '')
 								+ (star ? '(/*)?' : '');
-						})
-					.replace(/([\/.])/g, '\\$1');
+						});
 			}
 		})
 		
@@ -251,10 +254,10 @@
 	}
 	
 	/**
-	 * Separates inline regex from path strings by spliting into an array
+	 * Separates inline regex from `path` strings by spliting into an array
 	 */
 
-	function arrayifyPath(path){
+	function handleInlineRegex(path, keys){
 		var balance = 0, starts = null;
 		var arr = path.split(/(?=\()/g);
 		var rtrn = [];
@@ -285,7 +288,7 @@
 			{
 				rtrn.push(element);
 			}
-		});
+		}
 		
 		return rtrn;
 	}
