@@ -245,7 +245,7 @@
 								+ (star ? '(/*)?' : '');
 						});
 			}
-		})
+		});
 		
 		var regex = pieces.join('')
 			.concat(strict ? '' : '/?');
@@ -288,7 +288,7 @@
 			{
 				rtrn.push(element);
 			}
-		}
+		});
 		
 		return rtrn;
 	}
